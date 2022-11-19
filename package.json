@@ -1,0 +1,47 @@
+{
+  "name": "sharkproject",
+  "version": "1.0.0",
+  "description": "CodeSmith Social Media Platform",
+  "main": "index.js",
+  "scripts": {
+    "development": "nodemon",
+    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
+    "start": "NODE_ENV=production node ./dist/server.generated.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSGoblinShark/SharkProject.git"
+  },
+  "dependencies": {
+    "@hot-loader/react-dom": "^17.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.13.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "autoprefixer": "^10.4.13",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.7.2",
+    "nodemon": "^2.0.15",
+    "postcss": "^8.4.19",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.2.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-middleware": "^5.3.0",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-hot-middleware": "^2.25.1",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "author": "Benjamin Margolius, Gahl Peled, Linda Ngo, Tony Lim, Andy Wong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSGoblinShark/SharkProject/issues"
+  },
+  "homepage": "https://github.com/CSGoblinShark/SharkProject#readme"
+}
