@@ -30,8 +30,8 @@ const handleSubmit = (event) => {
     salary: event.target.salary.value,
     cohortNum: event.target.cohortNum.value,
     email: event.target.email.value,
-    password: event.target.password.value,
-    passwordConfirm: event.target.passwordConfirm.value,
+    password: '00000000',
+    passwordConfirm: '00000000',
     linkedin: event.target.linkedin.value,
     verification: event.target.verification.value,
   })
@@ -59,11 +59,11 @@ const handleSubmit = (event) => {
         <label for='email'>Email:<br></br></label>
         <input type='text' id='email' placeholder='email' required></input>
 
-        <label for='password'>Password:</label>
+        {/* <label for='password'>Password:</label>
         <input type='password' id='password' placeholder='password' required></input>
 
         <label for='passwordConfirm'>Password:</label>
-        <input type='password' id='passwordConfirm' placeholder='password confirm' required></input>
+        <input type='password' id='passwordConfirm' placeholder='password confirm' required></input> */}
 
         <label for='residentAlum'>Resident/Alumni:<br></br></label>
         <select id='residentAlum'> 
