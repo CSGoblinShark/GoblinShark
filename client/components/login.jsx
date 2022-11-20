@@ -27,14 +27,15 @@ function LoginButton() {
     })
 //login verifified by google -> route to table component
     const onSuccess = (res) => {
-        const checkEmail = { email: res.profileObj.email};
-        // fetch('')
-        // console.log(res.profileObj.email)
-        // console.log('success', res)
+        const {email} =  res.profileObj
+        const emailObj = { email }
+        console.log(emailObj)
 
-
-        axios.get('http://127.0.0.1:8090/api/collections/users/records', checkEmail)
-        .then(({ data }) => {
+        axios.get('http://127.0.0.1:8090/api/collections/users/records')
+        .then((data) => {
+            // if data is null, redirect to sign up
+            // else redirect to table
+            console.log('axios');
             console.log(data);
         })
         .catch(console.error);
