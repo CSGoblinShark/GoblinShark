@@ -4,6 +4,7 @@ import { gapi } from 'gapi-script';
 import React, {Component,  useState, useEffect } from 'react';
 import { render } from 'react-dom'
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 
 // Create a react functional hook component that has functionality to initiate oAuth
@@ -14,6 +15,8 @@ import ReactDOM from 'react-dom';
 const clientId = '210769127399-2l6p37ude8fr30ufsv4hmjkhkfdcb2jj.apps.googleusercontent.com'
 
 function LoginButton() {
+    // const [success, setSuccess] = useState(false);
+
     useEffect(() => {
         const initClient = () => {
             gapi.client.init({
@@ -22,11 +25,22 @@ function LoginButton() {
             })
         }
     })
-
+//login verifified by google -> route to table component
     const onSuccess = (res) => {
-        console.log('success', res)
-    }
+        const checkEmail = { email: res.profileObj.email};
+        // fetch('')
+        // console.log(res.profileObj.email)
+        // console.log('success', res)
 
+
+        axios.get('http://127.0.0.1:8090/api/collections/users/records', checkEmail)
+        .then(({ data }) => {
+            console.log(data);
+        })
+        .catch(console.error);
+    }
+            
+//fail verif by google -> route to signup page
     const onFailure = (res) => {
         console.log('failed', err)
     }
