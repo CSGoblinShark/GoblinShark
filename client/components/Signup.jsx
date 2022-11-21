@@ -15,7 +15,7 @@ import ReactDOM from 'react-dom';
 
 function Signup() {
 const [signupPage, setSignPage] = useState(false);
-const [matchVer, setMatchVer] = useState(false);
+const [matchVer, setMatchVer] = useState('');
 const {state} = useLocation();
 
 console.log(state);
@@ -24,15 +24,15 @@ console.log(state.lastName);
 console.log(state.firstName);
 
 let element = document.getElementById('verification');
-var addError = function() { element.classList.add('error'); };
-var removeError = function() { element.classList.remove('error'); };  
+let addError = function() { element.classList.add('error'); };
+const removeError = function() { setMatchVer('') };  
 
 const handleSubmit = (event) => {
   event.preventDefault();
   axios.get('/api/checkVerification', { params: {verification: event.target.verification.value} })
   .then((data) => {
     if (!data.data) {
-      addError();
+      setMatchVer('error')
       alert('Invalid Verification Code')
     }
     else {
@@ -133,7 +133,7 @@ const handleSubmit = (event) => {
         <input type='number' id='salary' placeholder='Estimated Salary' required></input>
         
         <label for='verification'>Verification code:<br></br></label>
-        <input type='text' id='verification' placeholder='Verification Code' onChange={removeError} required></input>
+        <input type='text' id='verification' class={matchVer} placeholder='Verification Code' onChange={removeError} required></input>
         <button id='submitButton' type='submit'>Submit</button>
     </form>
     : <Redirect to='/home'/>}
