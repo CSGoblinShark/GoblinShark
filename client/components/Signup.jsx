@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+mport React, { useState } from 'react';
+>>>>>>> fa47a50476babcbc59206e1643eeb374cae91723
 import axios from 'axios';
 // const { mutate } = params;
 
