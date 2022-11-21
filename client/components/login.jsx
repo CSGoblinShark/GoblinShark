@@ -87,7 +87,7 @@ function LoginButton(props) {
         // <h1 id="test123">hello from button</h1>
         <div id='loginPage'>
         {!success ? 
-        <div>
+        <div id='h1AndButton'>
         <h1 id='welcomeText'> Welcome to the social media app for Codesmith Residents/Alumni!</h1> 
         <GoogleLogin 
             id='LoginButton'
