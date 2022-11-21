@@ -10,6 +10,10 @@
   height: 765px;
 } 
 
+.error{
+  animation: shake 0.2s ease-in-out 0s 2;
+  box-shadow: 0 0 0.5em red;
+}
 /* #body {
  
 } */

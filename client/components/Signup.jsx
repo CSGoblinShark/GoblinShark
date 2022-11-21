@@ -15,6 +15,7 @@ import ReactDOM from 'react-dom';
 
 function Signup() {
 const [signupPage, setSignPage] = useState(false);
+const [matchVer, setMatchVer] = useState(false);
 const {state} = useLocation();
 
 console.log(state);
@@ -22,29 +23,65 @@ console.log(state.email);
 console.log(state.lastName);
 console.log(state.firstName);
 
+let element = document.getElementById('verification');
+var addError = function() { element.classList.add('error'); };
+var removeError = function() { element.classList.remove('error'); };  
+
 const handleSubmit = (event) => {
   event.preventDefault();
-  
-  axios.post('http://127.0.0.1:8090/api/collections/users/records', {
-    firstName: event.target.firstName.value.charAt(0).toUpperCase() + event.target.firstName.value.slice(1),
-    lastName: event.target.lastName.value,
-    residentAlum: event.target.residentAlum.value,
-    cohortLocation: event.target.cohortLocation.value,
-    city: event.target.city.value.charAt(0).toUpperCase() + event.target.city.value.slice(1), 
-    employed: event.target.employed.value,
-    employer: event.target.employer.value.charAt(0).toUpperCase() + event.target.employer.value.slice(1), 
-    salary: event.target.salary.value,
-    cohortNum: event.target.cohortNum.value,
-    email: event.target.email.value,
-    password: '00000000',
-    passwordConfirm: '00000000',
-    linkedin: event.target.linkedin.value,
-    verification: event.target.verification.value,
+  axios.get('/api/checkVerification', { params: {verification: event.target.verification.value} })
+  .then((data) => {
+    if (!data.data) {
+      addError();
+      alert('Invalid Verification Code')
+    }
+    else {
+      axios.post('/api/signup', {
+        imageUrl: state.imageUrl,
+        firstName: event.target.firstName.value.charAt(0).toUpperCase() + event.target.firstName.value.slice(1),
+        lastName: event.target.lastName.value,
+        email: event.target.email.value,
+        residentAlum: event.target.residentAlum.value,
+        cohortLocation: event.target.cohortLocation.value,
+        city: event.target.city.value.charAt(0).toUpperCase() + event.target.city.value.slice(1), 
+        employed: event.target.employed.value,
+        employer: event.target.employer.value.charAt(0).toUpperCase() + event.target.employer.value.slice(1), 
+        salary: event.target.salary.value,
+        cohortNum: event.target.cohortNum.value,
+        // password: '00000000',
+        // passwordConfirm: '00000000',
+        linkedin: event.target.linkedin.value,
+        verification: event.target.verification.value,
+      })
+      .then((data) => {
+        setSignPage(!signupPage);
+        console.log(signupPage)
+      })
+      .catch(console.log('error'));
+    }
   })
-  .then(() => {
-    setSignPage(!signupPage);
-  })
-  .catch(console.error);
+  // axios.post('/api/signup', {
+  //   imageUrl: state.imageUrl,
+  //   firstName: event.target.firstName.value.charAt(0).toUpperCase() + event.target.firstName.value.slice(1),
+  //   lastName: event.target.lastName.value,
+  //   email: event.target.email.value,
+  //   residentAlum: event.target.residentAlum.value,
+  //   cohortLocation: event.target.cohortLocation.value,
+  //   city: event.target.city.value.charAt(0).toUpperCase() + event.target.city.value.slice(1), 
+  //   employed: event.target.employed.value,
+  //   employer: event.target.employer.value.charAt(0).toUpperCase() + event.target.employer.value.slice(1), 
+  //   salary: event.target.salary.value,
+  //   cohortNum: event.target.cohortNum.value,
+  //   // password: '00000000',
+  //   // passwordConfirm: '00000000',
+  //   linkedin: event.target.linkedin.value,
+  //   verification: event.target.verification.value,
+  // })
+  // .then((data) => {
+  //   setSignPage(!signupPage);
+  //   console.log(signupPage)
+  // })
+  // .catch(console.log('error'));
 }
 
   return (
@@ -96,7 +133,7 @@ const handleSubmit = (event) => {
         <input type='number' id='salary' placeholder='Estimated Salary' required></input>
         
         <label for='verification'>Verification code:<br></br></label>
-        <input type='text' id='verification' placeholder='Verification Code' required></input>
+        <input type='text' id='verification' placeholder='Verification Code' onChange={removeError} required></input>
         <button id='submitButton' type='submit'>Submit</button>
     </form>
     : <Redirect to='/home'/>}

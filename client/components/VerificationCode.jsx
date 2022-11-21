@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
-export default function VerificationCode() {
+export default function VerificationCode(params) {
     const [show, setShow] = useState(true)
 
     return (
@@ -34,7 +34,7 @@ export default function VerificationCode() {
                                     <div className="ml-3 w-0 flex-1 pt-0.5">
                                         <p className="text-sm font-medium text-gray-900">Successfully created an invite code!</p>
                                         <p className="mt-1 text-sm text-gray-500">Anyone with this link can make an account. Only share with Codesmith Residents or Alumni!!!</p>
-                                        <p className="text-sm font-medium text-gray-900"> Verifcation Code:  13jsf49sn</p>
+                                        <p className="text-sm font-medium text-gray-900"> Verifcation Code: {params.code}</p>
                                     </div>
                                     <div className="ml-4 flex flex-shrink-0">
                                         <button
