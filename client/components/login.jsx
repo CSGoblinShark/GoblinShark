@@ -25,7 +25,12 @@ const clientId = '210769127399-2l6p37ude8fr30ufsv4hmjkhkfdcb2jj.apps.googleuserc
 function LoginButton(props) {
     const [success, setSuccess] = useState(false);
     const [fail, setFail] = useState(false);
-    let email = 'email@gmail.com';
+    const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    let fetchEmail = '';
+    // let lastName;
+    // let firstName;
 
     useEffect(() => {
         const initClient = () => {
@@ -37,20 +42,35 @@ function LoginButton(props) {
     })
 //login verifified by google -> route to table component
     const onSuccess = (res) => {
-        email = res.profileObj
-        console.log('success')
-        const emailObj = { email }
-        // console.log(emailObj)
+        fetchEmail = res.profileObj.email
+        // const emailObj = { email }
+        console.log(res.profileObj.email);
+        setEmail(res.profileObj.email);
+        // lastName = res.profileObj.familyName;
+        setFirstName(res.profileObj.givenName);
+        // firstName = res.profileObj.givenName;
+        setLastName(res.profileObj.familyName)
+        //res.profileObj.givenName
 
-        axios.get('http://127.0.0.1:8090/api/collections/users/records', { params: emailObj })
+        // console.log(emailObj)
+        console.log(`http://127.0.0.1:8090/api/collections/users/records/?filter=(email=%27${fetchEmail}%27)`)
+
+        axios.get(`http://127.0.0.1:8090/api/collections/users/records/?filter=(email=%27${fetchEmail}%27)`)
         .then((data) => {
+            console.log(data)
+            if (data.data.items.length !== 0) {
+                setSuccess(!success)
+            }
             // if data is null, redirect to sign up
             // else redirect to table
             // console.log('before set', success)
             // console.log('axios');
-            console.log(data);
-            setSuccess(!success);
-            setFail(!fail);
+            // console.log(data);
+            // setSuccess(!success);
+            // setFail(!fail);
+            else {
+                setFail(!fail)
+            }
         })
         .catch(console.error);
     }
@@ -63,7 +83,9 @@ function LoginButton(props) {
     if (fail) {
         signup.push(<Redirect to = {{
             pathname: '/signup',
-            state: { email: email }
+            state: { email: email, 
+                    firstName: firstName, 
+                    lastName: lastName }
         }}
         /> )
     }
@@ -72,7 +94,8 @@ function LoginButton(props) {
         // <button>test</button>
         // <h1 id="test123">hello from button</h1>
         <div id='loginPage'>
-        {/* {!success ?  */}
+        {!success ? 
+        <div>
         <h1 id='welcomeText'> Welcome to the social media app for Codesmith Residents/Alumni!</h1> 
         <GoogleLogin 
             id='LoginButton'
@@ -81,16 +104,14 @@ function LoginButton(props) {
             onSuccess={onSuccess}
             onFailure={onFailure}
             cookiePolicy={'single_host_origin'}
-            isSignedIn={true}
+            isSignedIn={false}
         />
-        {/* // :
-        // <Redirect to = {{
-        //     pathname: '/signup',
-        //     state: { email: email }
-        // }}
-        // /> 
-        // }
-        // {signup} */}
+        </div>
+         :
+        <Redirect to='/home'
+        /> 
+        }
+        {signup}
         </div>
     )
 }

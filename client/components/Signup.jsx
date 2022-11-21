@@ -16,19 +16,23 @@ import ReactDOM from 'react-dom';
 function Signup() {
 const [signupPage, setSignPage] = useState(false);
 const {state} = useLocation();
-console.log(state)
+
+console.log(state);
+console.log(state.email);
+console.log(state.lastName);
+console.log(state.firstName);
 
 const handleSubmit = (event) => {
-  // console.log(email)
   event.preventDefault();
+  
   axios.post('http://127.0.0.1:8090/api/collections/users/records', {
-    firstName: event.target.firstName.value,
+    firstName: event.target.firstName.value.charAt(0).toUpperCase() + event.target.firstName.value.slice(1),
     lastName: event.target.lastName.value,
     residentAlum: event.target.residentAlum.value,
     cohortLocation: event.target.cohortLocation.value,
-    city: event.target.city.value,
+    city: event.target.city.value.charAt(0).toUpperCase() + event.target.city.value.slice(1), 
     employed: event.target.employed.value,
-    employer: event.target.employer.value,
+    employer: event.target.employer.value.charAt(0).toUpperCase() + event.target.employer.value.slice(1), 
     salary: event.target.salary.value,
     cohortNum: event.target.cohortNum.value,
     email: event.target.email.value,
@@ -49,13 +53,13 @@ const handleSubmit = (event) => {
     {!signupPage ? 
     <form onSubmit={handleSubmit} id="formBox">
         <label for='firstName'>First name:</label>
-        <input type='text' id='firstName' placeholder='first name' required></input>
+        <input type='text' id='firstName' placeholder='first name' value={state.firstName} disabled='disabled' required></input>
         
         <label for='lastName'>Last name:</label>
-        <input type='text' id='lastName' placeholder='last name' required></input>
+        <input type='text' id='lastName' placeholder='last name' value={state.lastName} disabled='disabled' required></input>
 
         <label for='email'>Email:<br></br></label>
-        <input type='text' id='email' placeholder='email' required></input>
+        <input type='text' id='email' placeholder='email' value={state.email} disabled='disabled' required></input>
 
         <label for='residentAlum'>Resident/Alumni:<br></br></label>
         <select id='residentAlum'> 
