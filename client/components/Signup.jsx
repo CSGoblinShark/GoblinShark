@@ -90,10 +90,10 @@ const handleSubmit = (event) => {
     {!signupPage ? 
     <form onSubmit={handleSubmit} id="formBox">
         <label for='firstName'>First name:</label>
-        <input type='text' id='firstName' placeholder='first name' value={state.firstName} disabled='disabled' required></input>
+        <input type='text' id='firstName' placeholder='first name' value={state.firstName} required></input>
         
         <label for='lastName'>Last name:</label>
-        <input type='text' id='lastName' placeholder='last name' value={state.lastName} disabled='disabled' required></input>
+        <input type='text' id='lastName' placeholder='last name' value={state.lastName} required></input>
 
         <label for='email'>Email:<br></br></label>
         <input type='text' id='email' placeholder='email' value={state.email} disabled='disabled' required></input>
