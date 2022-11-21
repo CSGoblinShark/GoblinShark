@@ -17,10 +17,10 @@ export default function UserTable() {
 
     function handleShowVerification() {
         if (!clicked) {
-            axios.post('/api/verification') 
-            .then((data) => {
-                setVerificationCode(data.data)
-            })
+            axios.post('/api/verification')
+                .then((data) => {
+                    setVerificationCode(data.data)
+                })
             setClick(true);
         }
         setShowVerification(!showVerification);
@@ -39,12 +39,12 @@ export default function UserTable() {
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
-            {showVerification && <VerificationCode code={verificationCode}/>}
+            {showVerification && <VerificationCode code={verificationCode} />}
             <div className="sm:flex sm:items-center">
-                <div className="sm:flex-auto">
-                    <h1 className="text-xl font-semibold text-gray-900">Users</h1>
+                <div className="sm:flex-auto pt-5">
+                    <h1 className="text-xl font-semibold text-gray-900">Codesmith Residents and Alumni</h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        A list of all the users in your account including their name, title, email and role.
+
                     </p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -137,7 +137,7 @@ export default function UserTable() {
                                                     </div>
                                                     <div className="ml-4">
                                                         <div className="font-medium text-gray-900">{user.first_name + " " + user.last_name}</div>
-                                                        <div className="text-gray-500">{user.email}</div>
+                                                        <div className="text-gray-500">{user.showemail ? user.email : "Prefer not to share"}</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -162,11 +162,12 @@ export default function UserTable() {
                                                 </span>
                                             </td>}
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{user.employer}</td>
-                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{`$${user.salary}`}</td>
+                                            {user.showsalary && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{`$${user.salary}`}</td>}
+                                            {!user.showsalary && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{`Private`}</td>}
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                <a href={user.linkedin} className="text-indigo-600 hover:text-indigo-900">
+                                                {user.linkedin && <a href={user.linkedin} className="text-indigo-600 hover:text-indigo-900">
                                                     LinkedIn<span className="sr-only">, {user.last_name}</span>
-                                                </a>
+                                                </a>}
                                             </td>
                                         </tr>
                                     ))}

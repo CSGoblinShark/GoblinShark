@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.error{
+.error {
   animation: shake 0.2s ease-in-out 0s 2;
   box-shadow: 0 0 0.5em red;
 }
 
-html, body {
+html,
+body {
   min-height: 100%;
   background-color: antiquewhite;
 }
@@ -22,12 +23,16 @@ html, body {
 }
 
 #welcomeText {
-    font-weight: bold;
-    font-size: 30px;
-    background-image: linear-gradient(90deg, red, blue);
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  background-image: linear-gradient(90deg, red, blue);
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-top: 20px;
 }
 
 #h1AndButton {
@@ -37,9 +42,6 @@ html, body {
 }
 
 #signUpBody {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,19 +52,67 @@ html, body {
   background-color: white;
   display: flex;
   flex-direction: column;
-  width: 500px;
-  border: 1px solid black;
-  padding: 10px;
+  width: 50%;
+  border: 1px solid white;
+  padding: 30px;
   border-radius: 10px;
+  margin: 1em;
 }
 
-#formBox input {
-  border: 1px solid gray;
+#formBox>input {
+  border: 1px solid rgb(240, 240, 240);
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  min-height: 22px;
+  font-size: 20px;
+  padding-left: 7px;
+}
+
+#formBox>select {
+  margin-bottom: 15px;
+  font-size: 20px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+}
+
+#email {
+  border: 1px solid white;
 }
 
 #submitButton {
-    background-color: rgb(100, 200, 254);
-    border-radius: 10px;
+  margin-top: 20px;
+  background-color: rgb(100, 200, 254);
+  border-radius: 10px;
+  min-height: 40px;
+}
+
+#submitButton:hover {
+  background-color: rgb(31, 176, 255);
+  color: white;
+  font-weight: 470;
+}
+
+label {
+  font-weight: 500;
+  color: grey;
+}
+
+.visibility {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.visibility label {
+  width: 75%;
+}
+
+.visibility input {
+  align-self: center;
+  height: 20px;
+  width: 20px;
 }

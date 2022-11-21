@@ -533,8 +533,20 @@ video {
   pointer-events: auto;
 }
 
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 .fixed {
   position: fixed;
+}
+
+.absolute {
+  position: absolute;
 }
 
 .inset-0 {
@@ -564,6 +576,10 @@ video {
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
 }
 
 .mt-2 {
@@ -638,6 +654,10 @@ video {
   flex: 1 1 0%;
 }
 
+.flex-none {
+  flex: none;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -649,6 +669,11 @@ video {
 
 .translate-y-0 {
   --tw-translate-y: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-rotate-180 {
+  --tw-rotate: -180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -718,6 +743,10 @@ video {
   border-radius: 0.375rem;
 }
 
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .rounded-full {
   border-radius: 9999px;
 }
@@ -733,6 +762,11 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-indigo-600 {
@@ -810,6 +844,10 @@ video {
 
 .pt-0 {
   padding-top: 0px;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
 }
 
 .pl-4 {
@@ -957,6 +995,10 @@ video {
   transition-duration: 100ms;
 }
 
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
@@ -965,21 +1007,22 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
-#root {
-  background-color: antiquewhite;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 765px;
+.error {
+  animation: shake 0.2s ease-in-out 0s 2;
+  box-shadow: 0 0 0.5em red;
 }
 
-/* #body {
- 
-} */
+html,
+body {
+  min-height: 100%;
+  background-color: antiquewhite;
+}
 
 #loginPage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -987,12 +1030,21 @@ video {
 #welcomeText {
   font-weight: bold;
   font-size: 30px;
-  display: flex;
   background-image: linear-gradient(90deg, red, blue);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
   margin-bottom: 20px;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+#h1AndButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #signUpBody {
@@ -1006,21 +1058,69 @@ video {
   background-color: white;
   display: flex;
   flex-direction: column;
-  width: 500px;
-  border: 1px solid black;
-  padding: 10px;
+  width: 50%;
+  border: 1px solid white;
+  padding: 30px;
   border-radius: 10px;
+  margin: 1em;
 }
 
-#formBox input {
-  border: 1px solid gray;
+#formBox>input {
+  border: 1px solid rgb(240, 240, 240);
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  min-height: 22px;
+  font-size: 20px;
+  padding-left: 7px;
+}
+
+#formBox>select {
+  margin-bottom: 15px;
+  font-size: 20px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+}
+
+#email {
+  border: 1px solid white;
 }
 
 #submitButton {
+  margin-top: 20px;
   background-color: rgb(100, 200, 254);
   border-radius: 10px;
+  min-height: 40px;
+}
+
+#submitButton:hover {
+  background-color: rgb(31, 176, 255);
+  color: white;
+  font-weight: 470;
+}
+
+label {
+  font-weight: 500;
+  color: grey;
+}
+
+.visibility {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.visibility label {
+  width: 75%;
+}
+
+.visibility input {
+  align-self: center;
+  height: 20px;
+  width: 20px;
 }
 
 .hover\:bg-indigo-700:hover {
@@ -1056,6 +1156,19 @@ video {
 
 .focus\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px;
+}
+
+.group:hover .group-hover\:visible {
+  visibility: visible;
+}
+
+.group:hover .group-hover\:bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.group:focus .group-focus\:visible {
+  visibility: visible;
 }
 
 @media (min-width: 640px) {

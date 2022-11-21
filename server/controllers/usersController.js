@@ -7,36 +7,40 @@ usersController.createUser = (req, res, next) => {
     image_url,
     first_name, 
     last_name, 
-    email, 
+    email,
+    showemail, 
     resident_alum, 
     cohort_location, 
     city, 
     employed, 
     employer, 
-    salary, 
+    salary,
+    showsalary,
     cohort_num, 
     linkedin, 
-    verification) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`
+    verification) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`
   console.log(req.body);
-  const { 
+  const {
     imageUrl,
-    firstName, 
-    lastName,  
-    email, 
-    residentAlum, 
-    cohortLocation, 
-    city, 
+    firstName,
+    lastName,
+    email,
+    showemail,
+    residentAlum,
+    cohortLocation,
+    city,
     employed,
-    employer, 
+    employer,
     salary,
+    showsalary,
     cohortNum,
     linkedin,
     verification
   } = req.body
-  console.log(imageUrl)
-  db.query(create, [imageUrl, firstName, lastName,  email, residentAlum, cohortLocation, city, employed, employer, salary, cohortNum, linkedin, verification])
+  console.log(imageUrl, 'image')
+  db.query(create, [imageUrl, firstName, lastName, email, showemail, residentAlum, cohortLocation, city, employed, employer, salary, showsalary, cohortNum, linkedin, verification])
     .then((data) => {
-      console.log(data.rows);
+      // console.log(data.rows);
       res.locals.userData = data.rows;
       return next();
     })
@@ -49,7 +53,7 @@ usersController.getUser = (req, res, next) => {
   db.query(findUser, [email])
     .then((data) => {
       res.locals.userData = data.rows[0];
-      console.log(res.locals.userData)
+      // console.log(res.locals.userData)
       return next();
     })
     .catch(e => console.log(e, 'Error at usersController.getUser'));
@@ -60,7 +64,7 @@ usersController.getAll = (req, res, next) => {
   db.query(getUsers)
     .then((data) => {
       res.locals.users = data.rows
-      console.log(data.rows)
+      // console.log(data.rows)
       return next();
     })
     .catch(e => console.log(e, 'Error at usersController.getAll'));
@@ -85,7 +89,7 @@ usersController.verification = (req, res, next) => {
 
 usersController.checkVerification = (req, res, next) => {
   const check = "SELECT * FROM verification WHERE code=$1"
-  console.log(req.query.verification)
+  // console.log(req.query.verification)
   db.query(check, [req.query.verification])
     .then((data) => {
       if (!data.rows.length) res.locals.match = false;
