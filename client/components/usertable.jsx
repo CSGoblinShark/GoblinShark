@@ -4,6 +4,15 @@ import axios from 'axios'
 import VerificationCode from "./VerificationCode"
 import useSortableData from "./useSortableData"
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import ReactDOM, { render } from 'react-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    withRouter
+  } from "react-router-dom";
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
@@ -12,9 +21,23 @@ export default function UserTable() {
     const [showVerification, setShowVerification] = useState(false)
     const [verificationCode, setVerificationCode] = useState("")
     const [clicked, setClick] = useState(false);
+    const [logout, setLogout] = useState(false);
     const users = data || []
     const { sortedUsers, requestSort, sortConfig } = useSortableData(users)
 
+    function handleClickToLogout(){
+      setLogout(!logout);
+    }
+
+    const redirect = []
+    if (logout) {
+        redirect.push(<Redirect to = {{
+            pathname: '/',
+            state: { logout: logout }
+        }}
+        /> )
+    }
+    
     function handleShowVerification() {
         if (!clicked) {
             axios.post('/api/verification') 
@@ -54,6 +77,13 @@ export default function UserTable() {
                         className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                     >
                         Invite a user
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleClickToLogout}
+                        className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                    >
+                        Log Out
                     </button>
                 </div>
             </div>
@@ -176,6 +206,7 @@ export default function UserTable() {
                     </div>
                 </div>
             </div>
+            {redirect}
         </div>
     )
 }

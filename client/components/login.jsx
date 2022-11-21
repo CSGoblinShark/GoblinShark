@@ -11,6 +11,7 @@ import {
     Route,
     Link,
     Redirect,
+    useLocation,
     withRouter
   } from "react-router-dom";
 
@@ -29,9 +30,26 @@ function LoginButton(props) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [imageUrl, setUrl] = useState('')
+    // const [signedIn, setSignIn] = useState(true)
     let fetchEmail = '';
     // let lastName;
     // let firstName;
+    const {state} = useLocation();
+    
+    // if (state !== undefined) {
+    //     if (state.logout) {
+    //         console.log('logged out')
+    //         // setSignIn(false);
+    //         setSuccess(false);
+    //     }
+    // }     
+    // if (state.logout === true) {
+    //     console.log('logged out')
+    //     // setSuccess(false);
+    // }  
+    console.log(state !== undefined)
+    console.log(success)
+    
 
     useEffect(() => {
         const initClient = () => {
@@ -53,6 +71,8 @@ function LoginButton(props) {
         setLastName(res.profileObj.familyName);
         //res.profileObj.givenName
         setUrl(res.profileObj.imageUrl);
+        // setSignIn(true);
+        setSuccess(true)
 
         // console.log(emailObj)
         // console.log(`http://127.0.0.1:8090/api/collections/users/records/?filter=(email=%27${fetchEmail}%27)`)
@@ -60,7 +80,7 @@ function LoginButton(props) {
         axios.get('/api/signin', { params: {email: fetchEmail} })
             .then(({data}) => {
                 if (!Object.keys(data).length) setFail(!fail)
-                setSuccess(!success);
+                setSuccess(true);
             })
             .catch(console.error);
     }
@@ -96,7 +116,7 @@ function LoginButton(props) {
             onSuccess={onSuccess}
             onFailure={onFailure}
             cookiePolicy={'single_host_origin'}
-            isSignedIn={false}
+            isSignedIn={success}
         />
         </div>
          :
