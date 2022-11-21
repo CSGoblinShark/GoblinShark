@@ -965,6 +965,64 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
+#root {
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 765px;
+}
+
+/* #body {
+ 
+} */
+
+#loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#welcomeText {
+  font-weight: bold;
+  font-size: 30px;
+  display: flex;
+  background-image: linear-gradient(90deg, red, blue);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  margin-bottom: 20px;
+}
+
+#signUpBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#formBox {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#formBox input {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+#submitButton {
+  background-color: rgb(100, 200, 254);
+  border-radius: 10px;
+}
+
 .hover\:bg-indigo-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(67 56 202 / var(--tw-bg-opacity));

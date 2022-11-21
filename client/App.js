@@ -1,29 +1,32 @@
 import { hot } from 'react-hot-loader/root';
 import UserTable from './components/usertable';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-import LoginButton from './components/login';
+import { Switch, Route } from "react-router-dom";
+import LoginButton from './components/login.jsx';
+import Signup from './components/Signup.jsx';
 
 const App = () => {
 
-    return (
-        <Router>
-          <div>
-            {/* <UserTable /> */}
-            <Switch>
-                <Route 
-                    exact
-                    path='/'
-                    component={LoginButton}
-                />
-            </Switch>
-          </div>
-        </Router>
-    )
+  return (
+    <div id='body'>
+      <Switch>
+          <Route 
+              exact
+              path='/'
+              component={LoginButton}
+          />
+          <Route
+              exact
+              path='/signup'
+              component={Signup}
+          />
+          <Route
+              exact
+              path='/home'
+              component={UserTable}
+          />
+      </Switch>
+    </div>
+  )
 }
 /*
 <Router>

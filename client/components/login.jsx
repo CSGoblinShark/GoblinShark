@@ -5,6 +5,14 @@ import React, {Component,  useState, useEffect } from 'react';
 import { render } from 'react-dom'
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    withRouter
+  } from "react-router-dom";
 
 
 // Create a react functional hook component that has functionality to initiate oAuth
@@ -14,8 +22,10 @@ import axios from 'axios';
 
 const clientId = '210769127399-2l6p37ude8fr30ufsv4hmjkhkfdcb2jj.apps.googleusercontent.com'
 
-function LoginButton() {
-    // const [success, setSuccess] = useState(false);
+function LoginButton(props) {
+    const [success, setSuccess] = useState(false);
+    const [fail, setFail] = useState(false);
+    let email = 'email@gmail.com';
 
     useEffect(() => {
         const initClient = () => {
@@ -27,29 +37,44 @@ function LoginButton() {
     })
 //login verifified by google -> route to table component
     const onSuccess = (res) => {
-        const {email} =  res.profileObj
+        email = res.profileObj
+        console.log('success')
         const emailObj = { email }
-        console.log(emailObj)
+        // console.log(emailObj)
 
-        axios.get('http://127.0.0.1:8090/api/collections/users/records')
+        axios.get('http://127.0.0.1:8090/api/collections/users/records', { params: emailObj })
         .then((data) => {
             // if data is null, redirect to sign up
             // else redirect to table
-            console.log('axios');
+            // console.log('before set', success)
+            // console.log('axios');
             console.log(data);
+            setSuccess(!success);
+            setFail(!fail);
         })
         .catch(console.error);
     }
             
 //fail verif by google -> route to signup page
     const onFailure = (res) => {
-        console.log('failed', err)
+        //on failure redirect to signup
     }
-
+    const signup = []
+    if (fail) {
+        signup.push(<Redirect to = {{
+            pathname: '/signup',
+            state: { email: email }
+        }}
+        /> )
+    }
+   
     return (
         // <button>test</button>
         // <h1 id="test123">hello from button</h1>
-        <GoogleLogin
+        <div id='loginPage'>
+        {/* {!success ?  */}
+        <h1 id='welcomeText'> Welcome to the social media app for Codesmith Residents/Alumni!</h1> 
+        <GoogleLogin 
             id='LoginButton'
             clientId={clientId}
             buttonText="Sign in with Google"
@@ -58,7 +83,16 @@ function LoginButton() {
             cookiePolicy={'single_host_origin'}
             isSignedIn={true}
         />
+        {/* // :
+        // <Redirect to = {{
+        //     pathname: '/signup',
+        //     state: { email: email }
+        // }}
+        // /> 
+        // }
+        // {signup} */}
+        </div>
     )
 }
-
-export default LoginButton;
+//<Box setState={setState} state={state}/>
+export default withRouter(LoginButton);
