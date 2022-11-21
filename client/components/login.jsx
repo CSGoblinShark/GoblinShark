@@ -28,6 +28,7 @@ function LoginButton(props) {
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [imageUrl, setUrl] = useState('')
     let fetchEmail = '';
     // let lastName;
     // let firstName;
@@ -44,35 +45,24 @@ function LoginButton(props) {
     const onSuccess = (res) => {
         fetchEmail = res.profileObj.email
         // const emailObj = { email }
-        console.log(res.profileObj.email);
+        console.log(res.profileObj.imageUrl);
         setEmail(res.profileObj.email);
         // lastName = res.profileObj.familyName;
         setFirstName(res.profileObj.givenName);
         // firstName = res.profileObj.givenName;
-        setLastName(res.profileObj.familyName)
+        setLastName(res.profileObj.familyName);
         //res.profileObj.givenName
+        setUrl(res.profileObj.imageUrl);
 
         // console.log(emailObj)
-        console.log(`http://127.0.0.1:8090/api/collections/users/records/?filter=(email=%27${fetchEmail}%27)`)
+        // console.log(`http://127.0.0.1:8090/api/collections/users/records/?filter=(email=%27${fetchEmail}%27)`)
 
-        axios.get(`http://127.0.0.1:8090/api/collections/users/records/?filter=(email=%27${fetchEmail}%27)`)
-        .then((data) => {
-            console.log(data)
-            if (data.data.items.length !== 0) {
-                setSuccess(!success)
-            }
-            // if data is null, redirect to sign up
-            // else redirect to table
-            // console.log('before set', success)
-            // console.log('axios');
-            // console.log(data);
-            // setSuccess(!success);
-            // setFail(!fail);
-            else {
-                setFail(!fail)
-            }
-        })
-        .catch(console.error);
+        axios.get('/api/signin', { params: {email: fetchEmail} })
+            .then(({data}) => {
+                if (!Object.keys(data).length) setFail(!fail)
+                setSuccess(!success);
+            })
+            .catch(console.error);
     }
             
 //fail verif by google -> route to signup page
@@ -85,7 +75,9 @@ function LoginButton(props) {
             pathname: '/signup',
             state: { email: email, 
                     firstName: firstName, 
-                    lastName: lastName }
+                    lastName: lastName,
+                    imageUrl: `${imageUrl}`
+                    }
         }}
         /> )
     }
