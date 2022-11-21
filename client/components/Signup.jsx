@@ -1,32 +1,38 @@
-import React from 'react';
+import React, {Component,  useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useLocation,
+  withRouter
+} from "react-router-dom";
+import ReactDOM from 'react-dom';
+
 // const { mutate } = params;
 
 function Signup() {
+const [signupPage, setSignPage] = useState(false);
+const {state} = useLocation();
 
-// const res = async () => await fetch ('http://127.0.0.1:8090/api/collections/users/records').then((data) => {
-  
-// })
-
-// const showAllUsers = (event) => {
-//   event.preventDefault();
-//   axios.get('http://127.0.0.1:8090/api/collections/users/records', )
-//   .then(({ data }) => {
-//     console.log(data);
-//   })
-//   .catch(console.error);
-// }
+console.log(state);
+console.log(state.email);
+console.log(state.lastName);
+console.log(state.firstName);
 
 const handleSubmit = (event) => {
   event.preventDefault();
+  
   axios.post('http://127.0.0.1:8090/api/collections/users/records', {
-    firstName: event.target.firstName.value,
+    firstName: event.target.firstName.value.charAt(0).toUpperCase() + event.target.firstName.value.slice(1),
     lastName: event.target.lastName.value,
     residentAlum: event.target.residentAlum.value,
     cohortLocation: event.target.cohortLocation.value,
-    city: event.target.city.value,
+    city: event.target.city.value.charAt(0).toUpperCase() + event.target.city.value.slice(1), 
     employed: event.target.employed.value,
-    employer: event.target.employer.value,
+    employer: event.target.employer.value.charAt(0).toUpperCase() + event.target.employer.value.slice(1), 
     salary: event.target.salary.value,
     cohortNum: event.target.cohortNum.value,
     email: event.target.email.value,
@@ -36,34 +42,24 @@ const handleSubmit = (event) => {
     verification: event.target.verification.value,
   })
   .then(() => {
-    console.log('finished');
+    setSignPage(!signupPage);
   })
   .catch(console.error);
-  // console.log(event.target.rOrA.value)
-  // console.log(event.target.lname.value)
-  // console.log(typeof event.target.cohortLocation.value)
 }
 
-// const data = /* our form datas */
-
-// const newUser = await pb.collection('users').create(data);
-//(Signup.jsx?b265:26:50)
   return (
-    <form onSubmit={handleSubmit}>
+    <div id="signUpBody">
+    <h1 style={{'font-weight': 'bold', 'font-size': '30px'}}> Sign up </h1> 
+    {!signupPage ? 
+    <form onSubmit={handleSubmit} id="formBox">
         <label for='firstName'>First name:</label>
-        <input type='text' id='firstName' placeholder='first name' required></input>
+        <input type='text' id='firstName' placeholder='first name' value={state.firstName} disabled='disabled' required></input>
         
         <label for='lastName'>Last name:</label>
-        <input type='text' id='lastName' placeholder='last name' required></input>
+        <input type='text' id='lastName' placeholder='last name' value={state.lastName} disabled='disabled' required></input>
 
         <label for='email'>Email:<br></br></label>
-        <input type='text' id='email' placeholder='email' required></input>
-
-        {/* <label for='password'>Password:</label>
-        <input type='password' id='password' placeholder='password' required></input>
-
-        <label for='passwordConfirm'>Password:</label>
-        <input type='password' id='passwordConfirm' placeholder='password confirm' required></input> */}
+        <input type='text' id='email' placeholder='email' value={state.email} disabled='disabled' required></input>
 
         <label for='residentAlum'>Resident/Alumni:<br></br></label>
         <select id='residentAlum'> 
@@ -71,22 +67,23 @@ const handleSubmit = (event) => {
           <option value="alumni">Alumni</option>
         </select>
 
+        <label for='cohortLocation'> Cohort Location: </label>
         <select id='cohortLocation'> 
           <option value="WCRI">WCRI</option>
           <option value="ECRI">ECRI</option>
           <option value="PTRI">PTRI</option>
-          <option value="remote">remote</option>
         </select>
 
         <label for='cohortNum'>Cohort Number:<br></br></label>
-        <input type='number' id='cohortNum' placeholder='cohortNum' required></input>
+        <input type='number' id='cohortNum' placeholder='Cohort Number' required></input>
         
         <label for='city'>City:<br></br></label>
-        <input type='text' id='city' placeholder='city' required></input>
+        <input type='text' id='city' placeholder='City' required></input>
 
         <label for='linkedin'>Linkedin:<br></br></label>
-        <input type='url' id='linkedin' placeholder='linkedin' required></input>
+        <input type='url' id='linkedin' placeholder='Linkedin' required></input>
 
+        <label for='employed'> Employed: </label>
         <select id='employed'> 
           <option value="true">true</option>
           <option value="false">false</option>
@@ -96,56 +93,16 @@ const handleSubmit = (event) => {
         <input type='text' id='employer' placeholder='Job Title' required></input>
         
         <label for='salary'>Estimated Salary:<br></br></label>
-        <input type='number' id='salary' placeholder='estimated salary' required></input>
-        {/* <select id='salary'> 
-          <option value="0"> - </option>
-          <option value="75000">  $75,000</option>
-          <option value="100000">$100,000</option>
-          <option value="125000">$125,000</option>
-          <option value="150000">$150,000</option>
-          <option value="175000">$175,000</option>
-          <option value="200000">$200,000</option>
-          <option value="225000">$225,000</option>
-          <option value="250000">$250,000</option>
-          </select> */}
+        <input type='number' id='salary' placeholder='Estimated Salary' required></input>
         
         <label for='verification'>Verification code:<br></br></label>
-        <input type='text' id='verification' placeholder='verification code' required></input>
-        <button type='submit'>Submit</button>
+        <input type='text' id='verification' placeholder='Verification Code' required></input>
+        <button id='submitButton' type='submit'>Submit</button>
     </form>
+    : <Redirect to='/home'/>}
+    </div>
   )
 }
-export default Signup
 
-
-/* 
-handleSubmit = (event) => {
-  event.preventDefault();
-  axios.get('/restaurants')
-  .then(({ data }) => {
-    console.log(data);
-  })
-  .catch(console.error);
-}
-*/
-
-//   const [firstName, setFirstName] = useState('');
-//   const [lastName, setLastName] = useState('');
-//   const [residentAlumni, setresidentAlumni] = useState('');
-//   const [jobTitle, setjobTitle] = useState('');
-//   const [salary, setSalary] = useState(''); 
-//   const [email, setEmail] = useState('')
-//   const [verificationCode, setVerificationCode] = useState('');
-  
-//   const signUp = async () => {
-//     try {await fetch('', {
-//         method: 'POST',
-//         headers: {'Content-Type': 'application/json'},
-//         body: JSON.stringify({})
-//     })
-//     }
-// //     catch (err) {
-// //         throw err;
-// //   }
-// }
+export default withRouter(Signup)
 
